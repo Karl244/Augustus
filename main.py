@@ -3,9 +3,14 @@ import numpy as np
 import generation
 
 # Define functions
-def defineIdeologies():
-    ideologies = generation.anIdeology("socialism")
-    return ideologies
+
+
+def defineParties(Nparties,ideologies):
+    parties = []
+    for iP in range(Nparties)
+        partyName = generation.generatePartyName(ideologies)
+        parties.append(generation.aPoliticalParty)
+
 
 ideologies = defineIdeologies()
 p = generation.aPolitician

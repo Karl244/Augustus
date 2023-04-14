@@ -1,0 +1,26 @@
+# Ideologies
+# Add new ideologies with a blank line between them.
+# Increase the number of the ideologies.
+# always have a space before and after = sign
+# The first number is 0, since why the hell not
+# This file always need an empty line at the end
+
+number = 0
+name = Socialism
+plannedEconomyVsCapitalism = -3
+closedVsOpenMarket = 0
+stateReligionVsFreeReligion = 3
+nationalistVsGlobalist = 5
+conservativeVsProgressive = 4
+collectivistVsIndividualist = -3
+rgbcolor = 255 0 0
+
+number = 1
+name = NeoLiberalism
+plannedEconomyVsCapitalism = 6
+closedVsOpenMarket = 9
+stateReligionVsFreeReligion = 0
+nationalistVsGlobalist = 2
+conservativeVsProgressive = 0
+collectivistVsIndividualist = 7
+rgbcolor = 255 255 0
