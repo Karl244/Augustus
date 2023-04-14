@@ -1,15 +1,19 @@
 # import packages
 import random
 import pathlib
+import csv
+import pandas
 
 # set random seed
 random.seed(2023)
 
 class aPolitician:
-    def __init__(person, name, age):
+    def __init__(person, nationality, gender, name, age):
         person.name = name
         person.age = age
-        person.birthWeek = random.randint(0,52)
+        person.gender = gender
+        person.birthWeek = random.randint(1,52)
+        person.nationality = nationality
         person.partyLoyalty = 0
         person.honesty = 0
         person.likeability = 0
@@ -53,6 +57,30 @@ def checkBoundsOfValues(values):
     
     return values
 
+def generateName(nationality,gender):
+    thisPath = pathlib.Path(__file__).parent.resolve()
+    thisPath = str(thisPath.as_posix())
+    thisFirstNameFile = thisPath + '/common/nameLists/' + nationality + '_firstNames.csv'
+    thisLastNameFile = thisPath + '/common/nameLists/' + nationality + '_surnames.csv'
+
+    # slow pandas, but easily reads the csv files without much work
+    FirstNames = pandas.read_csv(thisFirstNameFile)
+    LastNames = pandas.read_csv(thisLastNameFile)
+
+    L = len(FirstNames)
+    R = random.randint(0,L-1)
+    if gender=='male':
+        firstName = FirstNames.values[R,0]
+    elif gender=='female':
+        firstName = FirstNames.values[R,1]
+    L = len(LastNames)
+    R = random.randint(0,L-1)
+    lastName = LastNames.Surnames[R]
+
+    name = firstName + ' ' + lastName
+    return name
+    
+
 class aPoliticalParty:
     def __init__(party,partyName):
         party.name = partyName
@@ -61,16 +89,15 @@ def generatePartyName(ideology,allIdeologies):
     if ideology == 'Socialism':
         anIdeology
 
-
-
 def defineIdeologies():
+    print('Should rewrite this as a csv file and use pandas to run this.')
+
     # Load the ideologies.txt
     thisPath = pathlib.Path(__file__).parent.resolve()
     thisPath = str(thisPath.as_posix())
     thisFile = thisPath + '/common/ideologie.txt'
     with open(thisFile,'r') as f:
         lines = f.readlines()
-        a=1
         # Find line where number = 0, that starts the process of reading this file
         start = []
         for iN in range(len(lines)):
@@ -120,9 +147,16 @@ def defineIdeologies():
 
 
 # tests
-person = aPolitician("John Wick", 36)
+person = aPolitician("American","male","John Wick", 36)
 person.introduce()
 print(person.birthWeek)
+
+# test random name
+name = generateName("British",'male')
+person = aPolitician("British",'male',name,random.randint(20,75))
+name = generateName("British",'female')
+person = aPolitician("British",'female',name,random.randint(20,75))
+person.introduce()
 
 # define all ideologies
 ideologies = defineIdeologies()
