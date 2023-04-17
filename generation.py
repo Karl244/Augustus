@@ -90,61 +90,35 @@ def generatePartyName(ideology,allIdeologies):
         anIdeology
 
 def defineIdeologies():
-    print('Should rewrite this as a csv file and use pandas to run this.')
 
-    # Load the ideologies.txt
+    # Load the ideologies.csv
     thisPath = pathlib.Path(__file__).parent.resolve()
     thisPath = str(thisPath.as_posix())
-    thisFile = thisPath + '/common/ideologie.txt'
-    with open(thisFile,'r') as f:
-        lines = f.readlines()
-        # Find line where number = 0, that starts the process of reading this file
-        start = []
-        for iN in range(len(lines)):
-            if lines[iN][0:6]=='number':
-                start.append(iN)
+    thisFile = thisPath + '/common/ideologies.csv'
 
-        ideologies = []     # create empty list
+    # slow pandas, but easily reads the csv files without much work
+    Data = pandas.read_csv(thisFile)
 
-        for iN in range(len(start)):
-            for jN in range(9):
-                if lines[start[iN] +jN][0:4]=='name':
-                    name = lines[start[iN] +jN][7:-1]
-                if lines[start[iN] +jN][0:26]=='plannedEconomyVsCapitalism':
-                    plannedEconomyVsCapitalism = int(lines[start[iN] +jN][29:-1])
-                if lines[start[iN] +jN][0:18]=='closedVsOpenMarket':
-                    closedVsOpenMarket = int(lines[start[iN] +jN][21:-1])
-                if lines[start[iN] +jN][0:27]=='stateReligionVsFreeReligion':
-                    stateReligionVsFreeReligion = int(lines[start[iN] +jN][30:-1])
-                if lines[start[iN] +jN][0:22]=='nationalistVsGlobalist':
-                    nationalistVsGlobalist = int(lines[start[iN] +jN][25:-1])
-                if lines[start[iN] +jN][0:25]=='conservativeVsProgressive':
-                    conservativeVsProgressive = int(lines[start[iN] +jN][28:-1])
-                if lines[start[iN] +jN][0:27]=='collectivistVsIndividualist':
-                    collectivistVsIndividualist = int(lines[start[iN] +jN][30:-1])
-                if lines[start[iN] +jN][0:8]=='rgbcolor':
-                    temp = lines[start[iN] +jN][11:-1]
-                    rgbcolor = []
-                    k0 = 0
-                    for k in range(len(temp)):
-                        if temp[k] == ' ':
-                            value = int(temp[k0:k])
-                            rgbcolor.append(value)
-                            k0 = k+1
-                        if k==(len(temp)-1):
-                            value = int(temp[k0:k+1])
-                            rgbcolor.append(value)
-
-            
-            try:
-                ideologies.append(anIdeology(name,plannedEconomyVsCapitalism,closedVsOpenMarket,
-                stateReligionVsFreeReligion,nationalistVsGlobalist,conservativeVsProgressive,
-                collectivistVsIndividualist,rgbcolor))
-            except:
-                print('Not all values are define for ideology number ' + str(iN))
-
+    ideologies = []
+    L = len(Data.values)
+    for iN in range(L):
+        name = Data.values[iN,0]
+        plannedEconomyVsCapitalism = Data.values[iN,1]
+        closedVsOpenMarket = Data.values[iN,2]
+        stateReligionVsFreeReligion = Data.values[iN,3]
+        nationalistVsGlobalist = Data.values[iN,4]
+        conservativeVsProgressive = Data.values[iN,5]
+        collectivistVsIndividualist = Data.values[iN,6]
+        rgbcolor = [Data.values[iN,7], Data.values[iN,8], Data.values[iN,9]] 
+        
+        # Combine them into a single object
+        try:    
+            ideologies.append(anIdeology(name,plannedEconomyVsCapitalism,closedVsOpenMarket,
+            stateReligionVsFreeReligion,nationalistVsGlobalist,conservativeVsProgressive,
+            collectivistVsIndividualist,rgbcolor))
+        except:
+            print('Not all values are define for ideology number ' + str(iN))
     return ideologies
-
 
 # tests
 person = aPolitician("American","male","John Wick", 36)
