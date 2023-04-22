@@ -1,12 +1,94 @@
 # import packages
 import random
 import pathlib
-import csv
+import numpy as np
 import pandas
+import json
 
 # set random seed
 random.seed(2023)
 
+####### Generating countries ###########
+class country: 
+    def __init__(country,data):
+        country.name = data["name"]
+        country.counties = []
+
+        # Load county data
+        L = len(data["counties"])
+        fileNameFirstPart = "common/countries/" + data["folderName"] + '/'
+        for j in range(L):
+            fileName = fileNameFirstPart + data["counties"][j] + '.txt'
+            with open(fileName,'r') as f:
+                countyData = json.load(f)
+            # append the counties
+            country.counties.append(countyData)        
+
+    def __str__(country):
+        return f"{country.name}" 
+
+class county:
+    def __init__(county,data):
+        county.name = data["countyName"]
+        county.population = []  # Initialise population object
+
+        # initialise other scaler values
+        county.totalPopulation = 0
+        county.totalAssets = 0
+        county.totalIncomePerYear = 0
+        L = len(data["populations"])
+        # load in the data
+        for j in range(L):
+            county.population.append(population(data["populations"][j]))
+            # set scalar values
+            county.totalPopulation = county.totalPopulation + county.population[j].inhabitants
+            county.totalAssets = county.totalAssets + county.population[j].totalAssets
+            county.totalIncomePerYear = county.totalIncomePerYear + county.population[j].totalIncomePerYear
+        
+        # Average income and assets
+        county.averageIncomePerYear = county.totalIncomePerYear/county.totalPopulation
+        county.averageAssets = county.totalAssets/county.totalPopulation
+
+    def __str__(county):
+        return f"{county.name}" 
+    
+class population:
+    def __init__(population,populationData):
+        population.type = populationData["type"]
+        population.inhabitants = populationData["inhabitants"]
+        population.assetsPerPerson = populationData["assetsPerPerson"]
+        population.workIncomePerPersonPerYear = populationData["workIncomePerPersonPerYear"]
+        population.totalAssets = population.inhabitants*population.assetsPerPerson
+        population.totalIncomePerYear = population.inhabitants*population.workIncomePerPersonPerYear
+
+        # Set ideologies
+        L = len(populationData["ideologies"])
+        population.ideologies = []
+        for j in range(L):
+            temp = populationIdeology(populationData["ideologies"][j])
+            population.ideologies.append(temp)
+    
+    def __str__(population):
+        return f"{population.type}" 
+
+class populationIdeology:
+    def __init__(populationIdeology,thisIdeologyData):
+        populationIdeology.name = "".join(list(thisIdeologyData))
+        temp = np.array(thisIdeologyData[populationIdeology.name])
+
+        # Check that the ideology values get normalized, just incase
+        S = sum(temp)
+        if S==1:
+            populationIdeology.values = temp
+        elif S==0:
+            print('This ' + populationIdeology.name + ' ideology has no distribution. Setting it to neutral')
+            populationIdeology.values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        else:
+            population.values = temp/S
+
+
+
+########### Generating people
 class aPolitician:
     def __init__(person, nationality, gender, name, age):
         person.name = name
@@ -24,6 +106,8 @@ class aPolitician:
     def introduce(person):
         print("Hello my name is " + person.name)
 
+
+###### Generating ideologies
 class anIdeology:
     def __init__(ideology,ideologyName,plannedEconomyVsCapitalism,closedVsOpenMarket,
     statVsFreeReligion,nationalVsGlobal,conservVsProgress,collectiveVsIndividual,rgbcolor):
@@ -37,14 +121,25 @@ class anIdeology:
         ideology.rgbcolor = rgbcolor
 
         try:
-            ideology = checkBoundsOfValues(ideology)
+            ideology = checkBoundsOfIdeologyValues(ideology)
         except:
             print('Some error with checking bounds')
         
     def __str__(ideology):
         return f"{ideology.name}" 
-    
-def checkBoundsOfValues(values):
+
+
+###### TO DO: generating a political party
+class aPoliticalParty:
+    def __init__(party,partyName):
+        party.name = partyName
+
+def generatePartyName(ideology,allIdeologies):
+    if ideology == 'Socialism':
+        anIdeology
+
+############## Functions #######
+def checkBoundsOfIdeologyValues(values):
     attributeNames = ["plannedEconomyVsCapitalism","closedVsOpenMarket","stateReligionVsFreeReligion",
     "nationalistVsGlobalist","conservativeVsProgressive", "collectivistVsIndividualist"]
 
@@ -57,6 +152,7 @@ def checkBoundsOfValues(values):
     
     return values
 
+######### Name generation ##############
 def generateName(nationality,gender):
     thisPath = pathlib.Path(__file__).parent.resolve()
     thisPath = str(thisPath.as_posix())
@@ -80,15 +176,6 @@ def generateName(nationality,gender):
     name = firstName + ' ' + lastName
     return name
     
-
-class aPoliticalParty:
-    def __init__(party,partyName):
-        party.name = partyName
-
-def generatePartyName(ideology,allIdeologies):
-    if ideology == 'Socialism':
-        anIdeology
-
 def defineIdeologies():
 
     # Load the ideologies.csv
@@ -119,24 +206,3 @@ def defineIdeologies():
         except:
             print('Not all values are define for ideology number ' + str(iN))
     return ideologies
-
-# tests
-person = aPolitician("American","male","John Wick", 36)
-person.introduce()
-print(person.birthWeek)
-
-# test random name
-name = generateName("British",'male')
-person = aPolitician("British",'male',name,random.randint(20,75))
-name = generateName("British",'female')
-person = aPolitician("British",'female',name,random.randint(20,75))
-person.introduce()
-
-# define all ideologies
-ideologies = defineIdeologies()
-print(ideologies[0])
-print(ideologies[1])
-
-# initialise some ideology
-someIdeology = anIdeology('Dummy',-11,-11,-11,-11,-11,-11,[255, 255, 255])
-print(someIdeology)
