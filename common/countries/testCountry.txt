@@ -1,0 +1,11 @@
+{
+    "name": "Test Country",
+    "folderName": "testCountry",
+    "counties": [
+        "countyA", "countyB"
+    ],
+    "laws": [
+        {"governmentType": "constitutionalMonarchy"},
+        {"THISNEEDSABETTERNAME": "2chambers"}
+    ]
+}

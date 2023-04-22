@@ -1,3 +1,6 @@
+# This file is depreciated
+
+
 # Ideologies
 # Add new ideologies with a blank line between them.
 # Increase the number of the ideologies.

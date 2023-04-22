@@ -1,0 +1,96 @@
+{
+    "countyName": "County B",
+
+    "populations": [
+        {
+            "type": "UltraRich",
+            "ethnicity": "British",
+            "inhabitants": 5,
+            "workIncomePerPersonPerYear": 220e3,
+            "assetsPerPerson": 1.5e+8,
+            "ideologies": [
+                {"plannedEconomyVsCapitalism": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"closedVsOpenMarket": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"stateReligionVsFreeReligion": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"nationalistVsGlobalist": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"conservativeVsProgressive": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"collectivistVsIndividualist": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]}
+            ]
+        },
+        {
+            "type": "Rich",
+            "ethnicity": "British",
+            "inhabitants": 750,
+            "workIncomePerPersonPerYear": 270e3,
+            "assetsPerPerson": 1.2e+7,
+            "ideologies": [
+                {"plannedEconomyVsCapitalism": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"closedVsOpenMarket": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"stateReligionVsFreeReligion": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"nationalistVsGlobalist": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"conservativeVsProgressive": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"collectivistVsIndividualist": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]}
+            ]
+        },
+        {
+            "type": "UpperMiddleClass",
+            "ethnicity": "British",
+            "inhabitants": 8e3,
+            "workIncomePerPersonPerYear": 130e3,
+            "assetsPerPerson": 1.1e+6,
+            "ideologies": [
+                {"plannedEconomyVsCapitalism": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"closedVsOpenMarket": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"stateReligionVsFreeReligion": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"nationalistVsGlobalist": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"conservativeVsProgressive": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"collectivistVsIndividualist": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]}
+            ]
+        },
+        {
+            "type": "MiddleClass",
+            "ethnicity": "British",
+            "inhabitants": 40e3,
+            "workIncomePerPersonPerYear": 68e3,
+            "assetsPerPerson": 1.8e+5,
+            "ideologies": [
+                {"plannedEconomyVsCapitalism": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"closedVsOpenMarket": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"stateReligionVsFreeReligion": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"nationalistVsGlobalist": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"conservativeVsProgressive": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"collectivistVsIndividualist": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]}
+            ]
+        },
+        {
+            "type": "LowerClass",
+            "ethnicity": "British",
+            "inhabitants": 140e3,
+            "workIncomePerPersonPerYear": 36e3,
+            "assetsPerPerson": 9e+3,
+            "ideologies": [
+                {"plannedEconomyVsCapitalism": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"closedVsOpenMarket": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"stateReligionVsFreeReligion": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"nationalistVsGlobalist": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"conservativeVsProgressive": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"collectivistVsIndividualist": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]}
+            ]
+        },
+        {
+            "type": "Poor",
+            "ethnicity": "British",
+            "inhabitants": 20e3,
+            "workIncomePerPersonPerYear": 15e3,
+            "assetsPerPerson": 0,
+            "ideologies": [
+                {"plannedEconomyVsCapitalism": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"closedVsOpenMarket": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"stateReligionVsFreeReligion": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"nationalistVsGlobalist": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"conservativeVsProgressive": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]},
+                {"collectivistVsIndividualist": [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]}
+            ]
+        }
+    ]        
+}

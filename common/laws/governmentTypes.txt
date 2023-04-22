@@ -1,0 +1,17 @@
+{
+    "govTypeAbrv": "constitutionalMonarchy",
+    "governmentTypeName": "Constitutional Monarchy",
+    "governmentPositionNames": {
+        "headOfState": ["King", "Queen"],
+        "headOfGovernment": "Prime Minister"
+    },
+}
+
+{
+    "govTypeAbrv": "republic",
+    "governmentTypeName": "Republic",
+    "governmentPositionNames": {
+        "headOfState": "President",
+        "headOfGovernment": "Prime Minister"
+    },
+}
