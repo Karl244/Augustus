@@ -65,6 +65,17 @@ def testLoadCountyData():
         passTest = False
     return passTest
 
+def testGenerateRandomGenders():
+    R = 1000
+    try:
+        gender = generation.generateRandomGender(R)
+        passTest = True
+    except:
+        print("testGenerateRandomGenders failed")
+        passTest = False
+    return passTest
+
+
 def testInitialiseAcountry():
     try:
         # Test if we can initialise a country
@@ -89,6 +100,7 @@ passTest.append(testRandomName())
 passTest.append(testDefineAllIdeologies())
 passTest.append(testAnIdeology())
 passTest.append(testLoadCountyData())
+passTest.append(testGenerateRandomGenders())
 passTest.append(testInitialiseAcountry())
 
 # get the end time

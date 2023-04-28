@@ -8,10 +8,14 @@ import json
 # set random seed
 random.seed(2023)
 
+# character id
+characterId = 0
+
 ####### Generating countries ###########
 class country: 
     def __init__(country,data):
         country.name = data["name"]
+        country.mainNationality = data["mainNationality"]
         country.counties = []
 
         # Load county data
@@ -22,7 +26,21 @@ class country:
             with open(fileName,'r') as f:
                 countyData = json.load(f)
             # append the counties
-            country.counties.append(countyData)        
+            country.counties.append(countyData)       
+        # Load law data
+        a=1
+
+        
+        # Load existing parties
+        country.parties = []    # initialise parties
+        country.people = []             # initialise people
+        P = len(data["parties"][0]['partyAbrevNames'])
+        for j in range(P):
+            key = data["parties"][0]['partyAbrevNames'][j]
+            party, partyLeader, members = loadPoliticalPartyFromData(data["parties"][j+1][key],country.mainNationality)
+            country.parties.append(party)
+            country.people.append(partyLeader)
+            country.people.append(members)
 
     def __str__(country):
         return f"{country.name}" 
@@ -90,15 +108,24 @@ class populationIdeology:
 
 ########### Generating people
 class aPolitician:
-    def __init__(person, nationality, gender, name, age):
+    def __init__(person, nationality, gender, name, age,plannedEconomyVsCapitalism=0,closedVsOpenMarket=0,stateReligionVsFreeReligion=0,
+        nationalistVsGlobalist=0,conservativeVsProgressive=0,collectivistVsIndividualist=0 ):
+        global characterId
         person.name = name
         person.age = age
         person.gender = gender
         person.birthWeek = random.randint(1,52)
         person.nationality = nationality
-        person.partyLoyalty = 0
-        person.honesty = 0
-        person.likeability = 0
+        person.characterId = characterId
+        person.partyLoyalty = round(random.uniform(3,10),1)
+        person.plannedEconomyVsCapitalism = plannedEconomyVsCapitalism
+        person.closedVsOpenMarket = closedVsOpenMarket
+        person.stateReligionVsFreeReligion = stateReligionVsFreeReligion
+        person.nationalistVsGlobalist = nationalistVsGlobalist
+        person.conservativeVsProgressive = conservativeVsProgressive
+        person.collectivistVsIndividualist = collectivistVsIndividualist
+
+        characterId = characterId + 1
 
     def __str__(person):
         return f"{person.name} ({person.age})"
@@ -106,6 +133,44 @@ class aPolitician:
     def introduce(person):
         print("Hello my name is " + person.name)
 
+def generateRandomPoliticians(nationality,R=1,plannedEconomyVsCapitalism=0,closedVsOpenMarket=0,stateReligionVsFreeReligion=0,
+        nationalistVsGlobalist=0,conservativeVsProgressive=0,collectivistVsIndividualist=0):      
+    gender = generateRandomGender(R)
+    age = generateRandomAge(R)
+
+    randomPoliticans = []
+    for j in range(R):
+        name = generateName(nationality,gender[j])
+
+         # adjust their ideology a bit
+        thisPlannedEconomyVsCapitalism = plannedEconomyVsCapitalism + round(random.gauss(0,1),1)
+        thisClosedVsOpenMarket = closedVsOpenMarket + round(random.gauss(0,1),1)
+        thisStateReligionVsFreeReligion = stateReligionVsFreeReligion + round(random.gauss(0,1),1)
+        thisNationalistVsGlobalist = nationalistVsGlobalist + round(random.gauss(0,1),1)
+        thisConservativeVsProgressive = conservativeVsProgressive + round(random.gauss(0,1),1)
+        thisCollectivistVsIndividualist = collectivistVsIndividualist + round(random.gauss(0,1),1)
+
+        randomPoliticans.append(aPolitician(nationality,gender[j],name, age[j], thisPlannedEconomyVsCapitalism,
+                                thisClosedVsOpenMarket,thisStateReligionVsFreeReligion,thisNationalistVsGlobalist,
+                                thisConservativeVsProgressive,thisCollectivistVsIndividualist))
+    return randomPoliticans
+
+def generateRandomGender(R=1):
+    RandomNumber = []
+    gender = []
+    for j in range(R):
+        RandomNumber.append(random.randint(0,1))
+        if RandomNumber[j]==1:
+            gender.append('male')
+        else:
+            gender.append('female')
+    return gender
+    
+def generateRandomAge(R=1):
+    age = []
+    for j in range(R):
+        age.append(random.randint(25,67))
+    return age
 
 ###### Generating ideologies
 class anIdeology:
@@ -131,8 +196,57 @@ class anIdeology:
 
 ###### TO DO: generating a political party
 class aPoliticalParty:
-    def __init__(party,partyName):
+    def __init__(party,partyName,membersName,plannedEconomyVsCapitalism,closedVsOpenMarket,stateReligionVsFreeReligion,
+                 nationalistVsGlobalist,conservativeVsProgressive,collectivistVsIndividualist,leaderId,membersId):
         party.name = partyName
+        party.membersName = membersName
+        party.plannedEconomyVsCapitalism = plannedEconomyVsCapitalism
+        party.closedVsOpenMarket = closedVsOpenMarket
+        party.stateReligionVsFreeReligion = stateReligionVsFreeReligion
+        party.nationalistVsGlobalist = nationalistVsGlobalist
+        party.conservativeVsProgressive = conservativeVsProgressive
+        party.collectivistVsIndividualist = collectivistVsIndividualist
+        party.leaderId = leaderId
+        party.membersId = membersId
+        
+
+
+def loadPoliticalPartyFromData(data,mainNationality):
+    partyName = data[0]['partyName']
+    partyMembersName = data[0]['partyMembersName']
+    plannedEconomyVsCapitalism = data[0]['plannedEconomyVsCapitalism']
+    closedVsOpenMarket = data[0]['closedVsOpenMarket']
+    stateReligionVsFreeReligion = data[0]['stateReligionVsFreeReligion']
+    nationalistVsGlobalist = data[0]['nationalistVsGlobalist']
+    conservativeVsProgressive = data[0]['conservativeVsProgressive']
+    collectivistVsIndividualist = data[0]['collectivistVsIndividualist']
+    L = len(data[0]['rgbcolor'])
+    rgbcolor = []
+    for j in range(L):
+        rgbcolor.append(data[0]['rgbcolor'][j])
+    # Check party leader
+    if data[0]['partyLeader']==False:
+        leader = generateRandomPoliticians(mainNationality,R=1)
+    else:
+        print("Need to actually make some code to load this person.")
+
+    # generate N random members
+    N = 25
+    members = generateRandomPoliticians(mainNationality,N,plannedEconomyVsCapitalism,closedVsOpenMarket,stateReligionVsFreeReligion,
+        nationalistVsGlobalist,conservativeVsProgressive,collectivistVsIndividualist)
+    memberCharacterId = []
+    for j in range(len(members)):
+        memberCharacterId.append(members[j].characterId)
+
+    # Create party
+    party = aPoliticalParty(partyName,partyMembersName,plannedEconomyVsCapitalism,closedVsOpenMarket,stateReligionVsFreeReligion,
+                 nationalistVsGlobalist,conservativeVsProgressive,collectivistVsIndividualist,leader[0].characterId,memberCharacterId)
+    
+    return party, leader, members
+
+    
+
+
 
 def generatePartyName(ideology,allIdeologies):
     if ideology == 'Socialism':
@@ -206,3 +320,12 @@ def defineIdeologies():
         except:
             print('Not all values are define for ideology number ' + str(iN))
     return ideologies
+
+
+######## CURRENTLY WORKING ON: Making political parties work
+fileName = "common/countries/testCountry.txt"
+with open(fileName,'r') as f:
+    data = json.load(f)
+    thisTestCountry = country(data)
+
+    a=1

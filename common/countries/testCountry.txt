@@ -4,8 +4,51 @@
     "counties": [
         "countyA", "countyB"
     ],
+    "mainNationality": "British",
     "laws": [
         {"governmentType": "constitutionalMonarchy"},
-        {"THISNEEDSABETTERNAME": "2chambers"}
+        {"upperHouse": [
+            {"name": "House of Lords"},
+            {"members": 777}
+            ]
+        },
+        {"lowerHouse": [
+            {"name": "House of Commons"},
+            {"members": 650}
+            ]
+        }
+    ],
+    "parties": [
+        {"partyAbrevNames": ["conservativeParty", "socialistParty"] },
+        {"conservativeParty": [
+            {
+                "partyName": "Conservatie Party",
+                "partyMembersName": "Tories",
+                "plannedEconomyVsCapitalism": 5,
+                "closedVsOpenMarket": 4,
+                "stateReligionVsFreeReligion": -2,
+                "nationalistVsGlobalist": -2,
+                "conservativeVsProgressive": -4 ,
+                "collectivistVsIndividualist": 3 ,
+                "rgbcolor": [0, 0, 200],
+                "partyLeader": false
+            }
+            ]
+        },
+        {"socialistParty": [
+            {
+                "partyName": "Labour Party",
+                "partyMembersName": "Social democrats",
+                "plannedEconomyVsCapitalism": -3 ,
+                "closedVsOpenMarket": 0 ,
+                "stateReligionVsFreeReligion": 3 ,
+                "nationalistVsGlobalist": 5,
+                "conservativeVsProgressive": 4 ,
+                "collectivistVsIndividualist": -3 ,
+                "rgbcolor": [240, 0, 0],
+                "partyLeader": false
+            }
+            ]
+        }
     ]
 }
