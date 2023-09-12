@@ -33,14 +33,15 @@ class country:
         
         # Load existing parties
         country.parties = []    # initialise parties
-        country.people = []             # initialise people
+        country.politicians = []
         P = len(data["parties"][0]['partyAbrevNames'])
         for j in range(P):
             key = data["parties"][0]['partyAbrevNames'][j]
             party, partyLeader, members = loadPoliticalPartyFromData(data["parties"][j+1][key],country.mainNationality)
+            partyLeader[0].partyLoyalty = 10.0
             country.parties.append(party)
-            country.people.append(partyLeader)
-            country.people.append(members)
+            country.politicians.extend(partyLeader)
+            country.politicians.extend(members)
 
     def __str__(country):
         return f"{country.name}" 
@@ -149,6 +150,10 @@ def generateRandomPoliticians(nationality,R=1,plannedEconomyVsCapitalism=0,close
         thisNationalistVsGlobalist = nationalistVsGlobalist + round(random.gauss(0,1),1)
         thisConservativeVsProgressive = conservativeVsProgressive + round(random.gauss(0,1),1)
         thisCollectivistVsIndividualist = collectivistVsIndividualist + round(random.gauss(0,1),1)
+
+        (thisPlannedEconomyVsCapitalism,thisClosedVsOpenMarket,thisStateReligionVsFreeReligion,thisNationalistVsGlobalist,
+         thisConservativeVsProgressive,thisCollectivistVsIndividualist) = checkBoundsOfPolticianIdeologyValues(thisPlannedEconomyVsCapitalism,
+            thisClosedVsOpenMarket,thisStateReligionVsFreeReligion,thisNationalistVsGlobalist,thisConservativeVsProgressive,thisCollectivistVsIndividualist)
 
         randomPoliticans.append(aPolitician(nationality,gender[j],name, age[j], thisPlannedEconomyVsCapitalism,
                                 thisClosedVsOpenMarket,thisStateReligionVsFreeReligion,thisNationalistVsGlobalist,
@@ -265,6 +270,54 @@ def checkBoundsOfIdeologyValues(values):
             setattr(values,att,10)
     
     return values
+
+def checkBoundsOfPolticianIdeologyValues(plannedEconomyVsCapitalism,closedVsOpenMarket,stateReligionVsFreeReligion,
+        nationalistVsGlobalist,conservativeVsProgressive,collectivistVsIndividualist):
+
+    if plannedEconomyVsCapitalism>10:
+        plannedEconomyVsCapitalismOut = 10
+    elif plannedEconomyVsCapitalism<-10:
+        plannedEconomyVsCapitalismOut = -10
+    else:
+        plannedEconomyVsCapitalismOut = plannedEconomyVsCapitalism
+    
+    if closedVsOpenMarket>10:
+        closedVsOpenMarketOut = 10
+    elif closedVsOpenMarket<-10:
+        closedVsOpenMarketOut = -10
+    else:
+        closedVsOpenMarketOut = closedVsOpenMarket
+
+    if stateReligionVsFreeReligion>10:
+        stateReligionVsFreeReligionOut = 10
+    elif stateReligionVsFreeReligion<-10:
+        stateReligionVsFreeReligionOut = -10
+    else:
+        stateReligionVsFreeReligionOut = stateReligionVsFreeReligion
+
+    if nationalistVsGlobalist>10:
+        nationalistVsGlobalistOut = 10
+    elif nationalistVsGlobalist<-10:
+        nationalistVsGlobalistOut = -10
+    else:
+        nationalistVsGlobalistOut = nationalistVsGlobalist
+
+    if conservativeVsProgressive>10:
+        conservativeVsProgressiveOut = 10
+    elif conservativeVsProgressive<-10:
+        conservativeVsProgressiveOut = -10
+    else:
+        conservativeVsProgressiveOut = conservativeVsProgressive
+    
+    if collectivistVsIndividualist>10:
+        collectivistVsIndividualistOut = 10
+    elif collectivistVsIndividualist<-10:
+        collectivistVsIndividualistOut = -10
+    else:
+        collectivistVsIndividualistOut = collectivistVsIndividualist
+
+    return (plannedEconomyVsCapitalismOut, closedVsOpenMarketOut, stateReligionVsFreeReligionOut, nationalistVsGlobalistOut,
+        conservativeVsProgressiveOut, collectivistVsIndividualistOut)
 
 ######### Name generation ##############
 def generateName(nationality,gender):
